@@ -1,0 +1,86 @@
+---
+title: "hw2paper"
+output: html_document
+date: "2023-02-21"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Figure 2
+```{r}
+gc <- c(10, 190, 800, 3, 100, 900)
+ac <- c(2*gc[1]+gc[2], gc[2]+2*gc[3], 2*gc[4]+gc[5], gc[5]+2*gc[6]) 
+gc1 <- c(gc[1]+gc[2], gc[3], gc[4]+gc[5], gc[6]) 
+gc2 <- c(gc[1], gc[2]+gc[3], gc[4], gc[5]+gc[6]) 
+pvg <- chisq.test (matrix (gc, ncol=3, byrow=T), corr=FALSE) $p.value 
+pva <- chisq.test(matrix(ac, ncol=2, byrow=T), corr=FALSE) $p.value
+pvg1 <- chisq.test(matrix (gc1, ncol=2, byrow=T), corr=FALSE)$p.value 
+pvg2 <- chisq.test(matrix(gc2, ncol=2, byrow=T), corr=FALSE) $p.value 
+pvb <- min (pvg1, pvg2)
+
+print (c(pvg, pva, pvb)) 
+pvg.f <- fisher.test(matrix(gc, ncol=3, byrow=T)) $p.value 
+pva.f <- fisher.test(matrix(ac, ncol=2, byrow=T)) $p.value 
+pvg1.f <- fisher.test(matrix(gc1, ncol=2, byrow=T))$p.value 
+pvg2.f <- fisher.test(matrix(gc2, ncol=2, byrow=T))$p.value 
+pvb.f <- min(pvg1.f, pvg2.f)
+print(c(pvg.f, pva.f, pvb.f))
+
+pvcat <- prop.trend.test(gc[1:3], gc[1:3]+gc[4:6], score=c(0, 0.5, 1))$p.value
+print(c(pvcat)) 
+
+gc < - gc*2
+# repeat the tests
+print ( c(pvg, pva, pvb))
+# 4.786203-17 2.716312-18 8.379499e-18
+print(c(pvg.f, pva.f, pvb.f)) # 1.231881e-17 3.485271e-18 6.810263e-18
+print(c(pvcat))
+```
+
+### Figure 3
+```{r eval=FALSE}
+ci.or <- function (counts, alpha)r
+# alpha=0.05 corresponds to 95%CI
+f <- gnorm (1 - alpha/2)
+# if alpha=0.05, f=1.96
+or <- counts [1]*counts [4]/(counts [2] *counts [3])
+sq <- sqrt (1/counts [1]+1/counts [2]+1/counts[3]+1/counts [4])
+upper <- exp( log(or) + f*sq)
+lower <- exp( log(or) - {*sq)
+res <- c(lover, or, upper)
+res
+print‹ ci.or (ac, 0.05)) print ci.or (ac, 0.01))
+ac <- ac*2
+print( ci.or (ac, 0.05))
+print( ci.or (ac, 0.01))
+# 1.650411 2.102878 2.679390
+# 1.529428 2.102878 2.891339
+# double the sample size
+# 1.771784 2.102878 2.495842
+# 1.678927 2.102878 2.633882
+```
+
+
+### Figure 4
+```{r eval=FALSE}
+8$- € 14, 0: 0, 34,
+, 4, 0, 109, 50, 10)
+n1 <- g[5]/2
+n2 < - g [5]/2
+N <- 2*sum (g)
+delta 1
+= < - c(0.25, 0.25, 0.25, 0.25)
+while( delta > 1e-10 ){
+fold «- f
+15-6(278(1) +812)+814]+11, 248[3)+8I2) +8[6) +12, 2*8[7)+8[4)+8[8]+n2, 278[9] +8[6]+g[81+113/1
+01 <- g[5]*I[1]*I[4]/ (f[1]*I [4] +£[2] *£ [3])
+12 <- g[5]xf[2)xf[3]/(f[1]*f[4]+f[2]*f[3])
+delta < - sum( abs(f-fold) )
+print round (f, 4) > # 0.1448 0.0045 0.6878 0.1629
+# 0.1483 0.0011 0.6843 0.1664
+# 0.1491 0.0003 0.6835 0.1672
+# 0.1493 0.0001 0.6833 0.1674
+# 0.1493 0.0000 0.6833 0.1674
+```
